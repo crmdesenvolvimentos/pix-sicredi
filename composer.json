@@ -1,0 +1,31 @@
+{
+  "name": "crmdesenvolvimentos/pix-sicredi",
+  "description": "Api de integração com o Pix Cobrança do Banco Sicredi",
+  "type": "library",
+  "keywords": [
+    "library",
+    "project",
+    "integracao",
+    "pix",
+    "sicredi"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^7.4 || ^8.0",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "php-curl-class/php-curl-class": "^9.6",
+    "nesbot/carbon": "^2.62.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Crmdesenvolvimentos\\PixSicredi\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Célio Martins",
+      "email": "crmdesenvolvimentos@gmail.com"
+    }
+  ]
+}
