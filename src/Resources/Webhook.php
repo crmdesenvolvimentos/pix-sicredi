@@ -36,7 +36,8 @@ class Webhook
 
     public function consult(string $key): Webhook
     {
-        $this->request = (new Request($this->api))->call($this->api->getUrl('/webhook/' . $key));
+        $this->request = (new Request($this->api))
+            ->call($this->api->getUrl('/webhook/' . $key));
 
         return $this;
     }

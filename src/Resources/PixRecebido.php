@@ -23,7 +23,8 @@ class PixRecebido
 
     public function consult(string $e2eid): PixRecebido
     {
-        $this->request = (new Request($this->api))->call($this->api->getUrl('/pix/' . $e2eid));
+        $this->request = (new Request($this->api))
+            ->call($this->api->getUrl('/pix/' . $e2eid));
 
         return $this;
     }

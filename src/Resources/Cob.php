@@ -20,7 +20,7 @@ class Cob
     protected ?string $txid = null;
     protected array $calendario = [];
     protected array $devedor = [];
-    protected ?string $loc = null;
+    protected ?string $location = null;
     protected array $valor = [];
     protected ?string $solicitacaoPagador = null;
     protected array $infoAdicionais = [];
@@ -85,11 +85,12 @@ class Cob
 
     public function create(): Cob
     {
-        $request = (new Request($this->api))->call(
-            $this->api->getUrl('/cob/' . $this->txid),
-            'PUT',
-            ['body' => $this->getBody()]
-        );
+        $request = (new Request($this->api))
+            ->call(
+                $this->api->getUrl('/cob/' . $this->txid),
+                'PUT',
+                ['body' => $this->getBody()]
+            );
 
         $this->request = $request;
 
@@ -99,11 +100,12 @@ class Cob
 
     public function update(): Cob
     {
-        $request = (new Request($this->api))->call(
-            $this->api->getUrl('/cob/' . $this->txid),
-            'PATCH',
-            ['body' => $this->getBody(true)]
-        );
+        $request = (new Request($this->api))
+            ->call(
+                $this->api->getUrl('/cob/' . $this->txid),
+                'PATCH',
+                ['body' => $this->getBody(true)]
+            );
 
         $this->request = $request;
 
@@ -113,7 +115,8 @@ class Cob
 
     public function consult(string $txid): Cob
     {
-        $request = (new Request($this->api))->call($this->api->getUrl('/cob/' . $txid));
+        $request = (new Request($this->api))
+            ->call($this->api->getUrl('/cob/' . $txid));
 
         $this->request = $request;
 
@@ -123,11 +126,12 @@ class Cob
 
     public function list(CobFilters $filter): Cob
     {
-        $request = (new Request($this->api))->call(
-            $this->api->getUrl('/cob/'),
-            'GET',
-            $filter->toArray()
-        );
+        $request = (new Request($this->api))
+            ->call(
+                $this->api->getUrl('/cob/'),
+                'GET',
+                $filter->toArray()
+            );
 
         $this->request = $request;
 

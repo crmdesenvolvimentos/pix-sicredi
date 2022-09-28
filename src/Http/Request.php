@@ -11,7 +11,6 @@ use Crmdesenvolvimentos\PixSicredi\Util\Support;
 class Request
 {
     private Api $api;
-    public array $info = [];
     public ?string $error = null;
     public array $body = [];
     public ?string $body_json = null;

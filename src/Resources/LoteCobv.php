@@ -24,7 +24,7 @@ class LoteCobv
     }
 
 
-    public function cobv() : Cobv
+    public function cobv(): Cobv
     {
         return new Cobv($this->api);
     }
@@ -43,11 +43,12 @@ class LoteCobv
         $this->loteId = $loteId;
         $this->descricao = $descricao;
 
-        $request = (new Request($this->api))->call(
-            $this->api->getUrl('/lotecobv/' . $loteId),
-            'PUT',
-            ['body' => $this->getBody()]
-        );
+        $request = (new Request($this->api))
+            ->call(
+                $this->api->getUrl('/lotecobv/' . $loteId),
+                'PUT',
+                ['body' => $this->getBody()]
+            );
 
         $this->request = $request;
 
@@ -60,11 +61,12 @@ class LoteCobv
         $this->loteId = $loteId;
         $this->descricao = $descricao;
 
-        $request = (new Request($this->api))->call(
-            $this->api->getUrl('/lotecobv/' . $loteId),
-            'PATCH',
-            ['body' => $this->getBody()]
-        );
+        $request = (new Request($this->api))
+            ->call(
+                $this->api->getUrl('/lotecobv/' . $loteId),
+                'PATCH',
+                ['body' => $this->getBody()]
+            );
 
         $this->request = $request;
 
@@ -76,7 +78,8 @@ class LoteCobv
     {
         $this->loteId = $loteId;
 
-        $request = (new Request($this->api))->call($this->api->getUrl('/lotecobv/' . $loteId));
+        $request = (new Request($this->api))
+            ->call($this->api->getUrl('/lotecobv/' . $loteId));
 
         $this->request = $request;
 
@@ -99,12 +102,13 @@ class LoteCobv
 
     protected function getBody(): array
     {
-        if (empty($this->cobsv)){
+        if (empty($this->cobsv)) {
             throw new \Exception('nenhum pix vencimento foi informado neste lote');
         }
 
         $cobsv = [];
-        foreach ($this->cobsv as $item){
+
+        foreach ($this->cobsv as $item) {
             $cobsv[] = $item->getBody(true);
         }
 

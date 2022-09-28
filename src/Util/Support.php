@@ -3,9 +3,8 @@
 
 namespace Crmdesenvolvimentos\PixSicredi\Util;
 
-
-use ArrayAccess;
 use Closure;
+use ArrayAccess;
 
 final class Support
 {

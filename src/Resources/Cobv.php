@@ -83,7 +83,7 @@ class Cobv
     }
 
 
-    public function setLocaId(int $id): Cobv
+    public function setLocId(int $id): Cobv
     {
         $this->loc['id'] = $id;
 
@@ -109,11 +109,12 @@ class Cobv
 
     public function create(): Cobv
     {
-        $request = (new Request($this->api))->call(
-            $this->api->getUrl('/cobv/' . $this->txid),
-            'PUT',
-            ['body' => $this->getBody()]
-        );
+        $request = (new Request($this->api))
+            ->call(
+                $this->api->getUrl('/cobv/' . $this->txid),
+                'PUT',
+                ['body' => $this->getBody()]
+            );
 
         $this->request = $request;
 
@@ -123,11 +124,12 @@ class Cobv
 
     public function update(): Cobv
     {
-        $request = (new Request($this->api))->call(
-            $this->api->getUrl('/cobv/' . $this->txid),
-            'PATCH',
-            ['body' => $this->getBody(true)]
-        );
+        $request = (new Request($this->api))
+            ->call(
+                $this->api->getUrl('/cobv/' . $this->txid),
+                'PATCH',
+                ['body' => $this->getBody(true)]
+            );
 
         $this->request = $request;
 
@@ -137,7 +139,8 @@ class Cobv
 
     public function consult(string $txid): Cobv
     {
-        $request = (new Request($this->api))->call($this->api->getUrl('/cobv/' . $txid));
+        $request = (new Request($this->api))
+            ->call($this->api->getUrl('/cobv/' . $txid));
 
         $this->request = $request;
 
@@ -147,11 +150,12 @@ class Cobv
 
     public function list(CobFilters $filter): Cobv
     {
-        $request = (new Request($this->api))->call(
-            $this->api->getUrl('/cobv/'),
-            'GET',
-            $filter->toArray()
-        );
+        $request = (new Request($this->api))
+            ->call(
+                $this->api->getUrl('/cobv/'),
+                'GET',
+                $filter->toArray()
+            );
 
         $this->request = $request;
 

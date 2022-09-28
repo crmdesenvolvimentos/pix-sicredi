@@ -23,7 +23,7 @@ class Payload
     }
 
 
-    public function create(string $tipo = 'cob'): Payload
+    public function create(string $tipo): Payload
     {
         $tipo = Support::lower($tipo);
 
@@ -45,7 +45,8 @@ class Payload
 
     public function consult(string $id): Payload
     {
-        $this->request = (new Request($this->api))->call($this->api->getUrl('/loc/' . $id));
+        $this->request = (new Request($this->api))
+            ->call($this->api->getUrl('/loc/' . $id));
 
         return $this;
     }

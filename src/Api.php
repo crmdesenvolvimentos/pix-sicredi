@@ -3,15 +3,16 @@
 
 namespace Crmdesenvolvimentos\PixSicredi;
 
-
-use Crmdesenvolvimentos\PixSicredi\Http\Request;
-use Crmdesenvolvimentos\PixSicredi\Resources\Payload;
-use Crmdesenvolvimentos\PixSicredi\Resources\PixRecebido;
-use Crmdesenvolvimentos\PixSicredi\Resources\Cobv;
-use Crmdesenvolvimentos\PixSicredi\Util\Support;
-use Crmdesenvolvimentos\PixSicredi\Resources\Webhook;
-use Crmdesenvolvimentos\PixSicredi\Resources\Cob;
 use Exception;
+use Crmdesenvolvimentos\PixSicredi\Http\Request;
+use Crmdesenvolvimentos\PixSicredi\Util\Support;
+use Crmdesenvolvimentos\PixSicredi\Resources\Cob;
+use Crmdesenvolvimentos\PixSicredi\Resources\Cobv;
+use Crmdesenvolvimentos\PixSicredi\Resources\Payload;
+use Crmdesenvolvimentos\PixSicredi\Resources\Webhook;
+use Crmdesenvolvimentos\PixSicredi\Resources\LoteCobv;
+use Crmdesenvolvimentos\PixSicredi\Resources\PixRecebido;
+
 
 class Api
 {
@@ -205,13 +206,14 @@ class Api
             'payloadlocation.read', 'payloadlocation.write' // criar e consultar payload
         ];
 
-        $resquest = (new Request($this))->authenticate(
-            $this->getUrl(
-                'oauth/token?grant_type=client_credentials&scope=' . implode('+', $scopes),
-                false
-            ),
-            $this->client_secret,
-            $this->client_id
+        $resquest = (new Request($this))
+            ->authenticate(
+                $this->getUrl(
+                    'oauth/token?grant_type=client_credentials&scope=' . implode('+', $scopes),
+                    false
+                ),
+                $this->client_secret,
+                $this->client_id
         );
 
         if ($resquest->status_code === 200) {
