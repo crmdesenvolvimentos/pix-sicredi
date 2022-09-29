@@ -16,34 +16,47 @@ use Crmdesenvolvimentos\PixSicredi\Resources\PixRecebido;
 
 class Api
 {
-
-    const BASE_DEVELOPMENT = 'https://api-pix-h.sicredi.com.br';
-    const BASE_PRODUCTION = 'https://api-pix.sicredi.com.br';
-    const BASE_PATH = 'api/v2';
-    const PRODUCTION = 'production';
-    const DEVELOPMENT = 'development';
-    const ENVIRONMENT = [self::PRODUCTION, self::DEVELOPMENT];
-
-    public string $environment = 'production';
+    protected string $endpoint = 'https://api-pix-h.sicredi.com.br';
+    protected string $oauth_path = 'oauth/token';
+    protected string $api_path = 'api/v2';
     protected string $client_id;
     protected string $client_secret;
-    protected string $certificado_sicredi;
-    protected string $certificado_cadeia_completa;
+    protected string $certificado_psp;
     protected string $certificado_aplicacao;
     protected string $password_certificado_aplicacao;
+    protected string $certificado_cadeia_completa;
+    protected array $scopes = [
+        'cob.read', 'cob.write', // criar e consultar cobranças
+        'cobv.read', 'cobv.write', // criar e consultar cobranças com vencimento
+        'lotecobv.read', 'lotecobv.write', // criar e consultar lotes de cobranças
+        'pix.write', 'pix.read', // consultar e criar pix
+        'webhook.read', 'webhook.write', // criar e consultar webhook
+        'payloadlocation.read', 'payloadlocation.write' // criar e consultar payload
+    ];
+
     public int $timeout = 5;
     public ?string $token = null;
 
 
-    public function setEnvironment(string $environment): Api
+    public function setEndpoint(string $url): Api
     {
-        $value = strtolower($environment);
+        $this->endpoint = $url;
 
-        if (in_array($value, self::ENVIRONMENT)) {
-            $this->environment = $value;
-        } else {
-            throw new Exception('ambiente inválido');
-        }
+        return $this;
+    }
+
+
+    public function setOauthPath(string $path): Api
+    {
+        $this->oauth_path = $path;
+
+        return $this;
+    }
+
+
+    public function setApiPath(string $path): Api
+    {
+        $this->api_path = $path;
 
         return $this;
     }
@@ -75,37 +88,19 @@ class Api
     }
 
 
-    public function getCertificadoSicredi(): string
+    public function getCertificadoPsp(): string
     {
-        return (string)$this->certificado_sicredi;
+        return (string)$this->certificado_psp;
     }
 
 
-    public function setCertificadoSicredi(string $certificado_sicredi): Api
+    public function setCertificadoPsp(string $certificado_psp): Api
     {
-        if (!file_exists($certificado_sicredi)) {
-            throw new Exception('certificado sicredi não encontrado');
+        if (!file_exists($certificado_psp)) {
+            throw new Exception('certificado do PSP não encontrado');
         }
 
-        $this->certificado_sicredi = $certificado_sicredi;
-
-        return $this;
-    }
-
-
-    public function getCertificadoCadeiaCompleta(): string
-    {
-        return (string)$this->certificado_cadeia_completa;
-    }
-
-
-    public function setCertificadoCadeiaCompleta(string $certificado_cadeia_completa): Api
-    {
-        if (!file_exists($certificado_cadeia_completa)) {
-            throw new Exception('certificado cadeia completa não encontrado');
-        }
-
-        $this->certificado_cadeia_completa = $certificado_cadeia_completa;
+        $this->certificado_psp = $certificado_psp;
 
         return $this;
     }
@@ -138,6 +133,32 @@ class Api
     public function setPasswordCertificadoAplicacao(string $password_certificado_aplicacao): Api
     {
         $this->password_certificado_aplicacao = $password_certificado_aplicacao;
+
+        return $this;
+    }
+
+
+    public function getCertificadoCadeiaCompleta(): string
+    {
+        return (string)$this->certificado_cadeia_completa;
+    }
+
+
+    public function setCertificadoCadeiaCompleta(string $certificado_cadeia_completa): Api
+    {
+        if (!file_exists($certificado_cadeia_completa)) {
+            throw new Exception('certificado cadeia completa não encontrado');
+        }
+
+        $this->certificado_cadeia_completa = $certificado_cadeia_completa;
+
+        return $this;
+    }
+
+
+    public function setScopes(array $scopes): Api
+    {
+        $this->scopes = $scopes;
 
         return $this;
     }
@@ -195,26 +216,17 @@ class Api
     }
 
 
-    public function tokenRequest(): Request
+    public function requestToken(): Request
     {
-        $scopes = [
-            'cob.read', 'cob.write', // criar e consultar cobranças
-            'cobv.read', 'cobv.write', // criar e consultar cobranças com vencimento
-            'lotecobv.read', 'lotecobv.write', // criar e consultar lotes de cobranças
-            'pix.write', 'pix.read', // consultar e criar pix
-            'webhook.read', 'webhook.write', // criar e consultar webhook
-            'payloadlocation.read', 'payloadlocation.write' // criar e consultar payload
-        ];
-
         $resquest = (new Request($this))
             ->authenticate(
                 $this->getUrl(
-                    'oauth/token?grant_type=client_credentials&scope=' . implode('+', $scopes),
+                    $this->oauth_path . '?grant_type=client_credentials&scope=' . implode('+', $this->scopes),
                     false
                 ),
                 $this->client_secret,
                 $this->client_id
-        );
+            );
 
         if ($resquest->status_code === 200) {
             $this->setToken($resquest->response->getDataValue('access_token'));
@@ -224,23 +236,12 @@ class Api
     }
 
 
-    public function getUrl(?string $path = null, $includePathApi = true): string
+    public function getUrl(?string $path = null, $includeApiPath = true): string
     {
-        $base = self::DEVELOPMENT;
-
-        switch ($this->environment) {
-            case self::PRODUCTION :
-                $base = self::BASE_PRODUCTION;
-                break;
-            case self::DEVELOPMENT:
-                $base = self::BASE_DEVELOPMENT;
-                break;
-        }
-
-        if ($includePathApi)
-            return $base . Support::start(self::BASE_PATH, '/') . Support::start($path, '/');
+        if ($includeApiPath)
+            return $this->endpoint . Support::start($this->PATH_API, '/') . Support::start($path, '/');
         else
-            return $base . Support::start($path, '/');
+            return $this->endpoint . Support::start($path, '/');
     }
 
 }

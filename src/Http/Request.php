@@ -98,7 +98,7 @@ class Request
     private function withCertificate(Curl $curl): void
     {
         $curl->setOpt(CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_3);
-        $curl->setOpt(CURLOPT_SSLCERT, $this->api->getCertificadoSicredi());
+        $curl->setOpt(CURLOPT_SSLCERT, $this->api->getCertificadoPsp());
         $curl->setOpt(CURLOPT_SSL_VERIFYPEER, 1);
         $curl->setOpt(CURLOPT_SSLKEY, $this->api->getCertificadoAplicacao());
         $curl->setOpt(CURLOPT_KEYPASSWD, $this->api->getPasswordCertificadoAplicacao());

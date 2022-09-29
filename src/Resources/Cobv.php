@@ -91,6 +91,20 @@ class Cobv
     }
 
 
+    public function setStatus(string $status): Cobv
+    {
+        $enum = ['ATIVA', 'REMOVIDA_PELO_USUARIO_RECEBEDOR'];
+
+        if (!in_array(Support::upper($status), $enum)){
+            throw new \Exception('status inválido, dever se "ATIVA" ou "REMOVIDA_PELO_USUARIO_RECEBEDOR"');
+        }
+
+        $this->status = Support::upper($status);
+
+        return $this;
+    }
+
+
     public function setSolicitacaoPagador(string $solicitacaopagador): Cobv
     {
         $this->solicitacaoPagador = Support::substr($solicitacaopagador, 0, 140);

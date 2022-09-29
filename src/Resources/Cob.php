@@ -88,7 +88,7 @@ class Cob
         $request = (new Request($this->api))
             ->call(
                 $this->api->getUrl('/cob/' . $this->txid),
-                'PUT',
+                $this->txid ? 'PUT' : 'POST',
                 ['body' => $this->getBody()]
             );
 

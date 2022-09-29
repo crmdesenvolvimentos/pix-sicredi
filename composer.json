@@ -5,9 +5,14 @@
   "keywords": [
     "library",
     "project",
+    "api",
     "integracao",
     "pix",
-    "sicredi"
+    "sicredi",
+    "payment",
+    "pagamento",
+    "bacen",
+    "laravel"
   ],
   "license": "MIT",
   "require": {
