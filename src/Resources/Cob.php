@@ -124,6 +124,21 @@ class Cob
     }
 
 
+    public function cancel(string $txid): Cob
+    {
+        $request = (new Request($this->api))
+            ->call(
+                $this->api->getUrl('/cob/' . $txid),
+                'PATCH',
+                ['body' => ['status' => 'REMOVIDA_PELO_USUARIO_RECEBEDOR']]
+            );
+
+        $this->request = $request;
+
+        return $this;
+    }
+
+
     public function list(CobFilters $filter): Cob
     {
         $request = (new Request($this->api))

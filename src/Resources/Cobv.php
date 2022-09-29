@@ -99,14 +99,6 @@ class Cobv
     }
 
 
-    public function cancelar(): Cobv
-    {
-        $this->status = 'REMOVIDA_PELO_USUARIO_RECEBEDOR';
-
-        return $this;
-    }
-
-
     public function create(): Cobv
     {
         $request = (new Request($this->api))
@@ -141,6 +133,21 @@ class Cobv
     {
         $request = (new Request($this->api))
             ->call($this->api->getUrl('/cobv/' . $txid));
+
+        $this->request = $request;
+
+        return $this;
+    }
+
+
+    public function cancel(string $txid): Cobv
+    {
+        $request = (new Request($this->api))
+            ->call(
+                $this->api->getUrl('/cobv/' . $txid),
+                'PATCH',
+                ['body' => ['status' => 'REMOVIDA_PELO_USUARIO_RECEBEDOR']]
+            );
 
         $this->request = $request;
 
