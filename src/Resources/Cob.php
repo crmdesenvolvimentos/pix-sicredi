@@ -19,7 +19,7 @@ class Cob
     protected ?string $chave = null;
     protected ?string $txid = null;
     protected array $calendario = [];
-    protected array $devedor = [];
+    protected array $devedor = ['expiracao' => 86400];
     protected ?string $location = null;
     protected array $valor = [];
     protected ?string $solicitacaoPagador = null;
@@ -59,9 +59,7 @@ class Cob
 
     public function setExpiracao(int $secounds): Cob
     {
-        $this->calendario = [
-            'expiracao' => $secounds
-        ];
+        $this->calendario['expiracao'] = $secounds;
 
         return $this;
     }
@@ -154,7 +152,7 @@ class Cob
     }
 
 
-    public function getBody(?bool $filled = false): array
+    public function getBody(?bool $filled = true): array
     {
         $data = [
             'chave' => $this->chave,

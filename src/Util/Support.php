@@ -319,4 +319,36 @@ final class Support
         return preg_replace('/(?:'.$quoted.')+$/u', '', $value).$cap;
     }
 
+
+    public static function startsWith($haystack, $needles)
+    {
+        if (! is_iterable($needles)) {
+            $needles = [$needles];
+        }
+
+        foreach ($needles as $needle) {
+            if ((string) $needle !== '' && str_starts_with($haystack, $needle)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    public static function endsWith($haystack, $needles)
+    {
+        if (! is_iterable($needles)) {
+            $needles = (array) $needles;
+        }
+
+        foreach ($needles as $needle) {
+            if ((string) $needle !== '' && str_ends_with($haystack, $needle)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

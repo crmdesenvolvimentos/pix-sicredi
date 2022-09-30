@@ -239,7 +239,7 @@ class Api
     public function getUrl(?string $path = null, $includeApiPath = true): string
     {
         if ($includeApiPath)
-            return $this->endpoint . Support::start($this->PATH_API, '/') . Support::start($path, '/');
+            return $this->endpoint . Support::start($this->api_path, '/') . Support::start($path, '/');
         else
             return $this->endpoint . Support::start($path, '/');
     }

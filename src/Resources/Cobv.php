@@ -184,7 +184,7 @@ class Cobv
     }
 
 
-    public function getBody(?bool $filled = false): array
+    public function getBody(?bool $filled = true): array
     {
         $data = [
             'chave' => $this->chave,
