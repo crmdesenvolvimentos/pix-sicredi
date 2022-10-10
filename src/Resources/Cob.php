@@ -18,8 +18,8 @@ class Cob
     public Api $api;
     protected ?string $chave = null;
     protected ?string $txid = null;
-    protected array $calendario = [];
-    protected array $devedor = ['expiracao' => 86400];
+    protected array $calendario = ['expiracao' => 86400];
+    protected array $devedor = [];
     protected ?string $location = null;
     protected array $valor = [];
     protected ?string $solicitacaoPagador = null;
