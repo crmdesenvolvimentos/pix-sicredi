@@ -43,13 +43,25 @@ class PixRecebido
     }
 
 
-    public function refund(string $id, string $e2eid, float $amount): PixRecebido
+    public function refund(
+        string $id,
+        string $e2eid,
+        float $amount,
+        ?string $descricao = NULL,
+        ?string $natureza = 'ORIGINAL'
+    ): PixRecebido
     {
         $this->request = (new Request($this->api))
             ->call(
                 $this->api->getUrl('/pix/' . $e2eid . '/devolucao/' . $id),
                 'PUT',
-                ['body' => ['valor' => number_format($amount, 2)]]
+                [
+                    'body' => [
+                        'valor' => number_format($amount, 2),
+                        'natureza' => $natureza,
+                        'descricao' => $descricao
+                    ]
+                ]
             );
 
         return $this;

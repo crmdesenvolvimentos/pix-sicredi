@@ -40,6 +40,9 @@ class Api
 
     public function setEndpoint(string $url): Api
     {
+        if (Support::endsWith($url, '/')){
+            $url = substr($url, 0, -1);
+        }
         $this->endpoint = $url;
 
         return $this;
