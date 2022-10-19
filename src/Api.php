@@ -4,8 +4,9 @@
 namespace Crmdesenvolvimentos\PixSicredi;
 
 use Exception;
-use Crmdesenvolvimentos\PixSicredi\Http\Request;
 use Crmdesenvolvimentos\PixSicredi\Util\Support;
+use Crmdesenvolvimentos\PixSicredi\Http\Request;
+use Crmdesenvolvimentos\PixSicredi\Http\Response;
 use Crmdesenvolvimentos\PixSicredi\Resources\Cob;
 use Crmdesenvolvimentos\PixSicredi\Resources\Cobv;
 use Crmdesenvolvimentos\PixSicredi\Resources\Payload;
@@ -36,6 +37,8 @@ class Api
 
     public int $timeout = 5;
     public ?string $token = null;
+    public Request $request;
+    public Response $response;
 
 
     public function setEndpoint(string $url): Api

@@ -21,6 +21,7 @@ class Request
     public function __construct(Api $api)
     {
         $this->api = $api;
+        $this->api->request = $this;
     }
 
 
@@ -60,6 +61,7 @@ class Request
 
         $this->status_code = $curl->getHttpStatusCode();
         $this->response = new Response();
+        $this->api->response = $this->response;
         $this->response->setResponseText($curl->rawResponse);
         $this->response->setData((array)$curl->response);
 
