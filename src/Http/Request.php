@@ -67,6 +67,9 @@ class Request
 
         if ($curl->error) {
             $this->error = $curl->errorCode . ': ' . $curl->errorMessage;
+            if (!$curl->rawResponse) $this->response->setResponseText($curl->errorMessage);
+            if (!$this->status_code) $this->status_code = $curl->errorCode;
+            if (empty($this->response->getData())) $this->response->setData((array)$curl->errorMessage());
         }
 
         $curl->close();
