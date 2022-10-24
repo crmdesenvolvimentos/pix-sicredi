@@ -8,8 +8,8 @@ trait Multa
 {
 
     protected array $multa = [
-        1 => 'fixed value',
-        2 => 'percentage'
+        1 => 'valor fixo',
+        2 => 'percentual'
     ];
 
 
