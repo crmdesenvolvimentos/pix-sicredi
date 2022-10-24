@@ -13,15 +13,9 @@ trait Valor
     ];
 
 
-    public function setValor(float $valor): self
+    public function getModalidadesAlteracao(): array
     {
-        if ($valor <= 0) {
-            throw new \Exception('valor deve ser maior que 0');
-        }
-
-        $this->valor['original'] = number_format($valor, 2);
-
-        return $this;
+        return $this->modalidades;
     }
 
 
@@ -35,5 +29,18 @@ trait Valor
 
         return $this;
     }
+
+
+    public function setValor(float $valor): self
+    {
+        if ($valor <= 0) {
+            throw new \Exception('valor deve ser maior que 0');
+        }
+
+        $this->valor['original'] = number_format($valor, 2);
+
+        return $this;
+    }
+
 
 }

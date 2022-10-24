@@ -19,6 +19,13 @@ trait Juros
     ];
 
 
+    public function getModalidadesJuros(): array
+    {
+        return $this->juros;
+    }
+
+
+
     public function setModalidadeJuros(int $modalidade): self
     {
         if (!in_array($modalidade, array_keys($this->juros))) {

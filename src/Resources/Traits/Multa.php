@@ -13,6 +13,13 @@ trait Multa
     ];
 
 
+
+    public function getModalidadesMulta(): array
+    {
+        return $this->multa;
+    }
+
+
     public function setModalidadeMulta(int $modalidade): self
     {
         if (!in_array($modalidade, array_keys($this->multa))) {

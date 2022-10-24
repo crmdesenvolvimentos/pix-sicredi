@@ -13,6 +13,13 @@ trait Abatimento
     ];
 
 
+
+    public function getModalidadesAbatimento(): array
+    {
+        return $this->abatimento;
+    }
+
+
     public function setModalidadeAbatimento(int $modalidade): self
     {
         if (!in_array($modalidade, array_keys($this->abatimento))) {

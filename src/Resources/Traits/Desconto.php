@@ -19,6 +19,13 @@ trait Desconto
     ];
 
 
+
+    public function getModalidadesDesconto(): array
+    {
+        return $this->desconto;
+    }
+
+
     public function setModalidadeDesconto(int $modalidade): self
     {
         if (!in_array($modalidade, array_keys($this->desconto))) {
