@@ -29,7 +29,7 @@ trait Desconto
     public function setModalidadeDesconto(int $modalidade): self
     {
         if (!in_array($modalidade, array_keys($this->desconto))) {
-            throw new \Exception('modalidade de juros inválido, deve ser entre 1 e 6');
+            throw new \Exception('modalidade de desconto inválido, deve ser entre 1 e 6');
         }
 
         $this->valor['desconto']['modalidade'] = $modalidade;
@@ -40,6 +40,12 @@ trait Desconto
 
     public function addDescontoDataFixa(string $date, float $valor): self
     {
+        $modalidade = $this->modalidadeDesconto();
+
+        if ( !in_array($modalidade, [1,2]) ){
+            throw new \Exception('modalidade informada não permite desconto por data fixa');
+        }
+
         if (!isset($this->valor['desconto']['descontoDataFixa'])){
             $this->valor['desconto']['descontoDataFixa'] = [];
         }
@@ -63,9 +69,27 @@ trait Desconto
 
     public function setValorDescontoModalidade(float $valor): self
     {
+        $modalidade = $this->modalidadeDesconto();
+
+        if ( !in_array($modalidade, [3,4,5,6]) ){
+            throw new \Exception('modalidade informada não permite desconto por data fixa');
+        }
+
         $this->valor['desconto']['valorPerc'] = number_format($valor, 2);
 
         return $this;
+    }
+
+
+    private function modalidadeDesconto()
+    {
+        $modalidade = Support::data_get($this->valor, 'desconto.modalidade');
+
+        if (is_null($modalidade)){
+            throw new \Exception('modalidade de desconto não informado, é exigido como primeiro parâmetro informar a modalidade');
+        }
+
+        return $modalidade;
     }
 
 }
