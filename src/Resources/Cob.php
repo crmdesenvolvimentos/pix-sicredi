@@ -8,12 +8,13 @@ use Crmdesenvolvimentos\PixSicredi\Http\Request;
 use Crmdesenvolvimentos\PixSicredi\Util\Support;
 use Crmdesenvolvimentos\PixSicredi\Resources\Traits\Valor;
 use Crmdesenvolvimentos\PixSicredi\Resources\Traits\Devedor;
+use Crmdesenvolvimentos\PixSicredi\Resources\Traits\Fillable;
 use Crmdesenvolvimentos\PixSicredi\Resources\Filters\CobFilters;
 use Crmdesenvolvimentos\PixSicredi\Resources\Traits\InfoAdicional;
 
 class Cob
 {
-    use Devedor, Valor, InfoAdicional;
+    use Devedor, Valor, InfoAdicional, Fillable;
 
     public Api $api;
     protected ?string $chave = null;

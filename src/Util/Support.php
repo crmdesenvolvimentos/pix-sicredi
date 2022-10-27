@@ -11,7 +11,7 @@ final class Support
 
     public static function camel_case($name): string
     {
-        $string = str_replace('-', ' ', $name);
+        $string = str_replace(['-', '_'], ' ', $name);
         return str_replace(' ', '', lcfirst(ucwords($string)));
     }
 

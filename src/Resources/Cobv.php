@@ -11,6 +11,7 @@ use Crmdesenvolvimentos\PixSicredi\Resources\Traits\Multa;
 use Crmdesenvolvimentos\PixSicredi\Resources\Traits\Juros;
 use Crmdesenvolvimentos\PixSicredi\Resources\Traits\Devedor;
 use Crmdesenvolvimentos\PixSicredi\Resources\Traits\Desconto;
+use Crmdesenvolvimentos\PixSicredi\Resources\Traits\Fillable;
 use Crmdesenvolvimentos\PixSicredi\Resources\Traits\Abatimento;
 use Crmdesenvolvimentos\PixSicredi\Resources\Traits\Logradouro;
 use Crmdesenvolvimentos\PixSicredi\Resources\Filters\CobFilters;
@@ -19,7 +20,7 @@ use Crmdesenvolvimentos\PixSicredi\Resources\Traits\InfoAdicional;
 
 class Cobv
 {
-    use Devedor, Logradouro, Valor, Multa, Juros, Abatimento, Desconto, InfoAdicional;
+    use Devedor, Logradouro, Valor, Multa, Juros, Abatimento, Desconto, InfoAdicional, Fillable;
 
     public Api $api;
     protected ?string $chave = null;

@@ -19,4 +19,22 @@ trait InfoAdicional
         return $this;
     }
 
+
+    public function addInformacaoAdicional(array $data): self
+    {
+        try {
+            foreach ($data as $info) {
+                $this->setInformacaoAdicional(
+                    $info['nome'],
+                    Support::data_get($info, 'informacao', Support::data_get($info, 'valor'))
+                );
+            }
+
+            return $this;
+        }
+        catch (\Exception | \Throwable $e) {
+            throw new \Exception('array contendo as informações adicionais é inválido');
+        }
+    }
+
 }
