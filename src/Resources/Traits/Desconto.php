@@ -38,7 +38,22 @@ trait Desconto
     }
 
 
-    public function addDescontoDataFixa(string $date, float $valor): self
+    public function addDescontoDataFixa(array $datas): self
+    {
+        try {
+            foreach ($datas as $item) {
+                $this->appendDescontoDataFixa($item['data'], $item['valor']);
+            }
+
+            return $this;
+        }
+        catch (\Exception | \Throwable $e){
+            throw new \Exception('array contendo as datas de desconto é inválido, deve conter as keys (data, valor)');
+        }
+    }
+
+
+    public function appendDescontoDataFixa(string $data, float $valor): self
     {
         $modalidade = $this->modalidadeDesconto();
 
@@ -54,12 +69,12 @@ trait Desconto
             throw new \Exception('descontos por data já atingiu o limite máximo de 3 registros');
         }
 
-        if (!Support::validateDate($date)) {
+        if (!Support::validateDate($data)) {
             throw new \Exception('a data de desconto fixo não é uma data válida');
         }
 
         $this->valor['desconto']['descontoDataFixa'][] = [
-            'data' => $date,
+            'data' => $data,
             'valorPerc' => number_format($valor, 2)
         ];
 

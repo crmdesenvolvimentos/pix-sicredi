@@ -33,7 +33,7 @@ trait InfoAdicional
             return $this;
         }
         catch (\Exception | \Throwable $e) {
-            throw new \Exception('array contendo as informações adicionais é inválido');
+            throw new \Exception('array contendo as informações adicionais é inválido, deve conter as keys (nome, valor)');
         }
     }
 
