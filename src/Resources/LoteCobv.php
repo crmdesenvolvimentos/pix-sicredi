@@ -38,6 +38,12 @@ class LoteCobv
     }
 
 
+    public function getCobsv(): array
+    {
+        return $this->cobsv;
+    }
+
+
     public function create(int $loteId, string $descricao): LoteCobv
     {
         $this->loteId = $loteId;
