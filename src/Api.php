@@ -230,8 +230,8 @@ class Api
                     $this->oauth_path . '?grant_type=client_credentials&scope=' . implode('+', $this->scopes),
                     false
                 ),
-                $this->client_secret,
-                $this->client_id
+                $this->client_id,
+                $this->client_secret
             );
 
         if ($resquest->status_code === 200) {
