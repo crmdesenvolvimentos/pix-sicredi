@@ -38,7 +38,7 @@ trait Abatimento
             throw new \Exception('valor do abatimento deve ser maior que 0');
         }
 
-        $this->valor['abatimento']['valorPerc'] = number_format($valor, 2);
+        $this->valor['abatimento']['valorPerc'] = number_format($valor, 2, '.', '');
 
         return $this;
     }

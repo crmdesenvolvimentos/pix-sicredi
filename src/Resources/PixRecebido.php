@@ -57,7 +57,7 @@ class PixRecebido
                 'PUT',
                 [
                     'body' => [
-                        'valor' => number_format($amount, 2),
+                        'valor' => number_format($amount, 2, '.', ''),
                         'natureza' => $natureza,
                         'descricao' => $descricao
                     ]

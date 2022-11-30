@@ -75,7 +75,7 @@ trait Desconto
 
         $this->valor['desconto']['descontoDataFixa'][] = [
             'data' => $data,
-            'valorPerc' => number_format($valor, 2)
+            'valorPerc' => number_format($valor, 2, '.', '')
         ];
 
         return $this;
@@ -90,7 +90,7 @@ trait Desconto
             throw new \Exception('modalidade informada não permite desconto por data fixa');
         }
 
-        $this->valor['desconto']['valorPerc'] = number_format($valor, 2);
+        $this->valor['desconto']['valorPerc'] = number_format($valor, 2, '.', '');
 
         return $this;
     }

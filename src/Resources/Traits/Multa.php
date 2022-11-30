@@ -38,7 +38,7 @@ trait Multa
             throw new \Exception('valor multa deve ser maior que 0');
         }
 
-        $this->valor['multa']['valorPerc'] = number_format($valor, 2);
+        $this->valor['multa']['valorPerc'] = number_format($valor, 2, '.', '');
 
         return $this;
     }

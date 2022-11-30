@@ -37,7 +37,7 @@ trait Valor
             throw new \Exception('valor deve ser maior que 0');
         }
 
-        $this->valor['original'] = number_format($valor, 2);
+        $this->valor['original'] = number_format($valor, 2, '.', '');
 
         return $this;
     }
