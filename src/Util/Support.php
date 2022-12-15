@@ -119,13 +119,6 @@ final class Support
 
     public static function data_get($target, $key, $default = null)
     {
-        if ( !function_exists('value') ) {
-            function value($value, ...$args)
-            {
-                return $value instanceof Closure ? $value(...$args) : $value;
-            }
-        }
-
         if (is_null($key)) {
             return $target;
         }
@@ -142,7 +135,7 @@ final class Support
             if ($segment === '*') {
 
                 if (!is_iterable($target)) {
-                    return value($default);
+                    return self::value($default);
                 }
 
                 $result = [];
@@ -159,11 +152,17 @@ final class Support
             } elseif (is_object($target) && isset($target->{$segment})) {
                 $target = $target->{$segment};
             } else {
-                return value($default);
+                return self::value($default);
             }
         }
 
         return $target;
+    }
+
+
+    public static function value($value, ...$args)
+    {
+        return $value instanceof Closure ? $value(...$args) : $value;
     }
 
 
