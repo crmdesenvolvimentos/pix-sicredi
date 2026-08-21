@@ -12,6 +12,7 @@ class LoteCobv
 {
 
     public Api $api;
+    public Request $request;
     protected string $loteId;
     protected string $descricao;
     protected array $cobsv = [];

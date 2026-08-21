@@ -20,12 +20,12 @@ class Api
     protected string $endpoint = 'https://api-pix-h.sicredi.com.br';
     protected string $oauth_path = 'oauth/token';
     protected string $api_path = 'api/v2';
-    protected string $client_id;
-    protected string $client_secret;
-    protected string $certificado_psp;
-    protected string $certificado_aplicacao;
-    protected string $password_certificado_aplicacao;
-    protected string $certificado_cadeia_completa;
+    protected string $client_id = '';
+    protected string $client_secret = '';
+    protected string $certificado_psp = '';
+    protected string $certificado_aplicacao = '';
+    protected string $password_certificado_aplicacao = '';
+    protected string $certificado_cadeia_completa = '';
     protected array $scopes = [
         'cob.read', 'cob.write', // criar e consultar cobranças
         'cobv.read', 'cobv.write', // criar e consultar cobranças com vencimento
@@ -170,7 +170,7 @@ class Api
     }
 
 
-    public function setTimeout($timeout): Api
+    public function setTimeout(int $timeout): Api
     {
         $this->timeout = (int)$timeout;
 
@@ -235,19 +235,19 @@ class Api
             );
 
         if ($resquest->status_code === 200) {
-            $this->setToken($resquest->response->getDataValue('access_token'));
+            $this->setToken((string)$resquest->response->getDataValue('access_token'));
         }
 
         return $resquest;
     }
 
 
-    public function getUrl(?string $path = null, $includeApiPath = true): string
+    public function getUrl(?string $path = null, bool $includeApiPath = true): string
     {
         if ($includeApiPath)
-            return $this->endpoint . Support::start($this->api_path, '/') . Support::start($path, '/');
+            return $this->endpoint . Support::start($this->api_path, '/') . Support::start($path ?? '', '/');
         else
-            return $this->endpoint . Support::start($path, '/');
+            return $this->endpoint . Support::start($path ?? '', '/');
     }
 
 }

@@ -8,7 +8,7 @@ use Crmdesenvolvimentos\PixSicredi\Util\Support;
 class Response
 {
 
-    private string $response_text;
+    private string $response_text = '';
     private array $data = [];
 
 
@@ -32,7 +32,7 @@ class Response
     }
 
 
-    public function getDataValue($key, $default = null)
+    public function getDataValue(string|array $key, mixed $default = null): mixed
     {
         return Support::data_get($this->data, $key, $default);
     }

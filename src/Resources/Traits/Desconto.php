@@ -96,7 +96,7 @@ trait Desconto
     }
 
 
-    private function modalidadeDesconto()
+    private function modalidadeDesconto(): int
     {
         $modalidade = Support::data_get($this->valor, 'desconto.modalidade');
 
@@ -104,7 +104,7 @@ trait Desconto
             throw new \Exception('modalidade de desconto não informado, é exigido como primeiro parâmetro informar a modalidade');
         }
 
-        return $modalidade;
+        return (int)$modalidade;
     }
 
 }

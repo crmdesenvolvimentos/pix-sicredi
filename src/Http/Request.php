@@ -25,7 +25,7 @@ class Request
     }
 
 
-    public function call(string $url, ?string $method = 'GET', ?array $params = []): Request
+    public function call(string $url, string $method = 'GET', array $params = []): Request
     {
         $headers = array_merge(
             [

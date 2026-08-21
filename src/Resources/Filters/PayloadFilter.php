@@ -29,12 +29,16 @@ class PayloadFilter
     public function somenteCob(): PayloadFilter
     {
         $this->filters['tipoCob'] = 'cob';
+
+        return $this;
     }
 
 
     public function somenteCobv(): PayloadFilter
     {
         $this->filters['tipoCob'] = 'cobv';
+
+        return $this;
     }
 
 }

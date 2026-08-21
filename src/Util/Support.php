@@ -9,14 +9,14 @@ use ArrayAccess;
 final class Support
 {
 
-    public static function camel_case($name): string
+    public static function camel_case(string $name): string
     {
         $string = str_replace(['-', '_'], ' ', $name);
         return str_replace(' ', '', lcfirst(ucwords($string)));
     }
 
 
-    public static function validateCnpjOrCpf($value): bool
+    public static function validateCnpjOrCpf(mixed $value): bool
     {
         $length = strlen(preg_replace('/\D/', '', $value));
         if ($length == 14) {
@@ -26,7 +26,7 @@ final class Support
     }
 
 
-    public static function validateCpf($value): bool
+    public static function validateCpf(mixed $value): bool
     {
         $c = preg_replace('/\D/', '', $value);
 
@@ -78,13 +78,13 @@ final class Support
     }
 
 
-    public static function validateCep($value): bool
+    public static function validateCep(string $value): bool
     {
         return strlen(preg_replace('/\D/', '', $value)) == 8;
     }
 
 
-    public static function validateDate($date)
+    public static function validateDate(mixed $date): bool
     {
         try {
             if ((! is_string($date) && ! is_numeric($date)) || strtotime($date) === false) {
@@ -100,13 +100,13 @@ final class Support
     }
 
 
-    public static function onlyNumbers($value)
+    public static function onlyNumbers(string $value): string
     {
-        return preg_replace('/\D/', '', $value);
+        return (string)preg_replace('/\D/', '', $value);
     }
 
 
-    public static function toDateTime($dateTime, $format = 'Y-m-d H:i:s')
+    public static function toDateTime(?string $dateTime = null, string $format = 'Y-m-d H:i:s'): ?string
     {
         if (!is_null($dateTime))
             $date = date($format, strtotime(str_replace('/', '-', $dateTime)));
@@ -117,7 +117,7 @@ final class Support
     }
 
 
-    public static function data_get($target, $key, $default = null)
+    public static function data_get(mixed $target, string|array|null $key, mixed $default = null): mixed
     {
         if (is_null($key)) {
             return $target;
@@ -160,13 +160,13 @@ final class Support
     }
 
 
-    public static function value($value, ...$args)
+    public static function value(mixed $value, ...$args): mixed
     {
         return $value instanceof Closure ? $value(...$args) : $value;
     }
 
 
-    public static function exists($array, $key): bool
+    public static function exists(array|ArrayAccess $array, string $key): bool
     {
         if ($array instanceof ArrayAccess) {
             return $array->offsetExists($key);
@@ -180,7 +180,7 @@ final class Support
     }
 
 
-    public static function collapse($array): array
+    public static function collapse(array $array): array
     {
         $results = [];
 
@@ -196,7 +196,7 @@ final class Support
     }
 
 
-    public static function dot($array, $prepend = ''): array
+    public static function dot(array $array, string $prepend = ''): array
     {
         $results = [];
 
@@ -217,7 +217,7 @@ final class Support
     }
 
 
-    public static function undot($array)
+    public static function undot(array $array): array
     {
         $results = [];
 
@@ -229,12 +229,8 @@ final class Support
     }
 
 
-    public static function set(&$array, $key, $value)
+    public static function set(array &$array, string $key, mixed $value): array
     {
-        if (is_null($key)) {
-            return $array = $value;
-        }
-
         $keys = explode('.', $key);
 
         foreach ($keys as $i => $key) {
@@ -257,7 +253,7 @@ final class Support
     }
 
 
-    public static function length($value, $encoding = null): int
+    public static function length(string $value, ?string $encoding = null): int
     {
         if ($encoding) {
             return mb_strlen($value, $encoding);
@@ -267,7 +263,7 @@ final class Support
     }
 
 
-    public static function substr($string, $start, $length = null): string
+    public static function substr(string $string, int $start, ?int $length = null): string
     {
         return mb_substr($string, $start, $length, 'UTF-8');
     }
@@ -279,19 +275,19 @@ final class Support
     }
 
 
-    public static function lower($value): string
+    public static function lower(string $value): string
     {
         return mb_strtolower($value, 'UTF-8');
     }
 
 
-    public static function get($value, $default = null)
+    public static function get(mixed $value, mixed $default = null): mixed
     {
         return self::isNotNull($value) ? $value : $default;
     }
 
 
-    public static function isNotNull( $value ): bool
+    public static function isNotNull(mixed $value): bool
     {
         if ( is_array($value) || is_object($value) ){
             return !empty($value);
@@ -303,7 +299,7 @@ final class Support
     }
 
 
-    public static function start($value, $prefix): string
+    public static function start(string $value, string $prefix): string
     {
         $quoted = preg_quote($prefix, '/');
 
@@ -311,7 +307,7 @@ final class Support
     }
 
 
-    public static function finish($value, $cap): string
+    public static function finish(string $value, string $cap): string
     {
         $quoted = preg_quote($cap, '/');
 
@@ -319,7 +315,7 @@ final class Support
     }
 
 
-    public static function startsWith($haystack, $needles)
+    public static function startsWith(string $haystack, string|iterable $needles): bool
     {
         if (! is_iterable($needles)) {
             $needles = [$needles];
@@ -335,7 +331,7 @@ final class Support
     }
 
 
-    public static function endsWith($haystack, $needles)
+    public static function endsWith(string $haystack, string|iterable $needles): bool
     {
         if (! is_iterable($needles)) {
             $needles = (array) $needles;

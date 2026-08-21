@@ -11,7 +11,7 @@ use Crmdesenvolvimentos\PixSicredi\Resources\Filters\PayloadFilter;
 
 class Payload
 {
-    const TIPOSCOB = ['cob', 'cobv'];
+    public const TIPOSCOB = ['cob', 'cobv'];
 
     public Api $api;
     public Request $request;
